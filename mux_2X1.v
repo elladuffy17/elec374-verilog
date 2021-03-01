@@ -1,3 +1,5 @@
+`timescale 1ns/10ps
+
 module mux_2X1(
 	input [31:0] in0, in1, 
 	input selectSignal, 
