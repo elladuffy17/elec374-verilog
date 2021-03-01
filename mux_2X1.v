@@ -1,9 +1,9 @@
 `timescale 1ns/10ps
 
 module mux_2X1(
+	output reg [31:0] out
 	input [31:0] in0, in1, 
-	input selectSignal, 
-	output reg [31:0] out);
+	input selectSignal);
 
   //multiplexer is used to switch one of the several input lines to a single common output line
 	always@(*) //continuous loop
