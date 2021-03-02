@@ -1,7 +1,7 @@
 `timescale 1ns/10ps //specifies the time unit and precision for the module
 
 //module created to outline figure 2 - the GP register
-module reg_32_bits(
+module GPReg(
 	input wire clk, //synchronous clock signal
 	input wire clr, //used to reset the registers to a known state
 	input wire enable, //control signal that allows the data from the bus to be written onto the register
