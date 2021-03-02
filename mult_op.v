@@ -22,7 +22,7 @@ module mult_op (input signed [31:0] multiplicand, multiplier, output reg [32*2-1
 		for (x=0; x<(32/2); x=x+1)
 		begin
 			case(cc[x])
-				3'c001 : pp[x] = {multiplier[32-1], multiplier};
+				3'b001 : pp[x] = {multiplier[32-1], multiplier};
 				3'b010 : pp[x] = {multiplier[32-1], multiplier};
 				3'b011 : pp[x] = {multiplier, 1'b0};
 				3'b100 : pp[x] = {multiplier_comp[32-1:0], 1'b0};
