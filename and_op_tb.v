@@ -1,5 +1,3 @@
-// and datapath_tb.v file: <This is the filename>
-
 //and_op_tb.v, testbench for the AND operation module 
 
 `timescale 1ns/10ps
@@ -27,6 +25,7 @@ module and_op_tb;
 	always @(posedge Clock) // finite state machine; if clock rising-edge
 		begin
 			case(Present_state)
+				
 				Default		: Present_state = Reg_load1a;
 				Reg_load1a	: Present_state = Reg_load1b;
 				Reg_load1b	: Present_state = Reg_load2a;
@@ -39,8 +38,9 @@ module and_op_tb;
 				T2		:  Present_state = T3;
 				T3		:  Present_state = T4;
 				T4		:  Present_state = T5;
-
+				
 			endcase
+			
 		end
 
 	always @ (Present_state) //do the required job in each state
