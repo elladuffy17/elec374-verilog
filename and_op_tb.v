@@ -133,24 +133,3 @@ always @ (Present_state) //do the required job in each state
 	end
 
 endmodule
-
-
-And r5 r2 r4 
-R2 22 32'h00000022
-R4 24 32'h00000024
-So r5 would be 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
