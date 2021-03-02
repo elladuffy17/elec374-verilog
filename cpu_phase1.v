@@ -9,7 +9,9 @@ module cpuPhase1(
   //the input (in.port) and output (out.port) connects the CPU to the outside world
   output wire [31:0] inPortOut,
   input wire [31:0] inPortIn,
-  input wire clk, clr, mDataIn);
+  input wire clk, clr, mDataIn,
+  input pcOut,
+);
   
   
   /* design/instantiate the registers RO to R15, PC, IR, Y, Z, MAR, HI and LO */
