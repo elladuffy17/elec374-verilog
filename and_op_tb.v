@@ -4,7 +4,8 @@
 
 module and_op_tb;
 
-	reg PCout, Zlowout, MDRout, R2out, R4out; reg MARin, Zin, PCin, MDRin, IRin, Yin;
+	reg PCout, Zlowout, MDRout, R2out, R4out; 
+	reg MARin, Zin, PCin, MDRin, IRin, Yin;
 	reg IncPC, Read, AND R5in, R2in, R4in; //'AND' changes based on operation we want to test
 	reg Clock;
 	reg [31:0] Mdatain;
