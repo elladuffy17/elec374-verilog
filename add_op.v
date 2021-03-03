@@ -2,7 +2,7 @@
 
 //do we need 'timescale 1ns / 1ps
 
-module add (input [31:0] regA, input [31:0] regB, input wire cin, 
+module add_op (input [31:0] regA, input [31:0] regB, input wire cin, 
 	output wire [31:0] sum, output wire [31:0] cout); 
 
 wire cout1; 
