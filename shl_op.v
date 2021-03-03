@@ -1,4 +1,5 @@
 //shl_op.v, 32-bit SHIFT LEFT operation module
+`timescale 1ns/10ps
 
 module shl_op (
 	input wire [31:0] data_in,
