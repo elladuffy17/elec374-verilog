@@ -125,13 +125,14 @@ module cpuPhase1(
                 busMuxInLo, busMuxInZHi, busMuxInZLo, busMuxInPC, busMuxInMDR, busMuxInInPort,
                 busMuxInC, R0Out, R1Out, R2Out, R3Out, R4Out, R5Out, R6Out, R7Out, R8Out, R9Out,
                 R10Out, R11Out, R12Out, R13Out, R14Out, R15Out, hiOut, loOut, zHighOut, zLoOut, 
-                pcOut, MDRout, inPortOut, Cout = 0;
+                pcOut, MDRout, inPortOut, Cout
   input R0Out, R1Out, R2Out, R3Out, R4Out, R5Out, R6Out, R7Out,
   R8Out, R9Out, R10Out, R11Out, R12Out, R13Out, R14Out, R15Out, hiOut, loOut,
                 zHighOut, zLoOut, pcOut, MDRout, inPortOut, Cout);
   
   //MAR, IR, ???
   //alu
+  
   
   end module
     
