@@ -1,7 +1,7 @@
-//rol_op.v, 32-bit ROTATE RIGHT operation module
+//rol_op.v, 32-bit ROTATE LEFT operation module
 `timescale 1ns/10ps
 
-module ror_op (input wire [31:0] data_in, input wire [4:0] numOfRotateBits,
+module rol_op (input wire [31:0] data_in, input wire [4:0] numOfRotateBits,
 	output reg [31:0] data_out);
 
 	always @ (*) //'*' indicates all variables are considered in sensitivity list, behaves like combinational logic 
