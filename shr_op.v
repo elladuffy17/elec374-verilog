@@ -1,4 +1,5 @@
 //shr_op.v, 32-bit SHIFT RIGHT operation module
+`timescale 1ns/10ps
 
 module shr_op (
 	input wire [31:0] data_in,
