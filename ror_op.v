@@ -1,4 +1,5 @@
 //ror_op.v, 32-bit ROTATE RIGHT operation module
+`timescale 1ns/10ps
 
 module ror_op (input wire [31:0] data_in, input wire [4:0] numOfRotateBits,
 	output reg [31:0] data_out);
