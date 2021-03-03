@@ -1,4 +1,5 @@
 //div_op.v, 32-bit DIVISION operation module
+`timescale 1ns/10ps
 
 module div_op (input signed [31:0] divisor, dividend, output reg [32*2-1:0] result);
 
