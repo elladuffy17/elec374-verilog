@@ -1,4 +1,5 @@
 //neg_op.v, 32-bit NEGATION operation module
+`timescale 1ns/10ps
 
 module neg_op (
 	input wire [31:0] regA,
