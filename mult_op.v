@@ -1,4 +1,5 @@
 //mult_op.v, 32-bit MULTIPLICATION operation module using Booth Algorithm 
+`timescale 1ns/10ps
 
 module mult_op (input signed [31:0] multiplicand, multiplier, output reg [32*2-1:0] result);
 
