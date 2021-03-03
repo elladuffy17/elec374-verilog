@@ -1,6 +1,5 @@
 // alu.v, Arithmetic Logic Unit module
-
-'timescale 1ns / 10ps
+'timescale 1ns/10ps
 
 module alu (
 
