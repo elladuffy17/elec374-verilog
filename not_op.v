@@ -1,4 +1,5 @@
 //not_op.v, 32_bit NOT operation module
+`timescale 1ns/10ps
 
 module not_op (
 	input wire [31:0] regA,
