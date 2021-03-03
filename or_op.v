@@ -1,5 +1,5 @@
 //or_op.v, 32-bit OR operation module
-
+`timescale 1ns/10ps
 
 module or_op(
 	input wire [31:0] regA,
