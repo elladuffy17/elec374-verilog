@@ -7,7 +7,7 @@ module mdr_unit(
   input clk, clr, MDRin, MDRread);
   
 wire [31:0] muxOut; //need to feed output from multiplexer into MDR. the multiplexer is used to select between the two inputs. a 2-to-1 MUX is required
-mux_2X1 MDRmux (busMuxOut, mDataIn, MDRread, muxOut); //call mux_2X1
+  mux_2X1 MDRmux (busMuxOutMDR, mDataIn, MDRread, muxOut); //call mux_2X1
 
 //data is stored in the MDR using the synchronous clock signal and the the MDRin control signal
 always @(posedge clk)
