@@ -77,7 +77,7 @@ module cpuPhase1(
   wire [31:0] busMuxInMDR;
   wire [31:0] busMuxInInPort;
   wire [31:0] busMuxInC;
-  
+  wire [31:0] busMuxInY;
   
   //enable signals for registers
   wire R1Enable, R2Enable, R3Enable, R4Enable, R5Enable, R6Enable, R7Enable, R8Enable, R9Enable, 
@@ -113,6 +113,7 @@ module cpuPhase1(
   GPReg pcReg(busMuxInPC, clk, clr, pcEnable, busMuxOut);
   GPReg inPortReg(busMuxInInPort, clk, clr, inPortEnable, busMuxOut);
   GPReg cReg(busMuxInC, clk, clr, CEnable, busMuxOut);
+  GPReg Y(busMuxInY, clk, clr, Yin, busMuxOut);
   
   mux_2X1 MDRmux (busMuxOutMDR, mDataIn, MDRread, muxOut);
   GPReg MDRReg(busMuxInMDR, clk, clr, MDREnable, busMuxOutMDR);
@@ -132,7 +133,14 @@ module cpuPhase1(
   
   //MAR, IR, ???
   //alu
-  
+  alu aluPhase1(
+  .clock(clk),
+	.clear(clr), 
+	.regA(busMuxInY),
+  .regB(busMuxOut),
+  5'b1000,
+	.regZ(Cout)
+	);
   
   end module
     
