@@ -1,7 +1,8 @@
+//2 inputs to 1 output
 `timescale 1ns/10ps
 
 module mux_2X1(
-	output reg [31:0] out
+	output reg [31:0] out,
 	input [31:0] in0, in1, 
 	input selectSignal);
 
