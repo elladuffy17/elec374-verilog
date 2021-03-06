@@ -10,7 +10,7 @@ module neg_op (
 	wire [31:0] temp; //holds temporary value
 	wire cout; //holds carryout value 
 
-	not_op not(.regA(regA), .regZ(temp));
-	add_op add(.regA(temp), .regB(32'd1), .cin(1'd0), .sum(Rz), .cout(cout));
+	not_op not_op(.regA(regA), .regZ(temp));
+	add_op add_op(.regA(temp), .regB(32'd1), .cin(1'd0), .sum(Rz), .cout(cout));
 
 endmodule
