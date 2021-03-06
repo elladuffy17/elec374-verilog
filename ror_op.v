@@ -12,11 +12,13 @@ module ror_op (input wire [31:0] data_in, input wire [4:0] numOfRotateBits,
 			5'd30: 	data_out <= {data_in[29:0], data_in[31:30]};
 			5'd29: 	data_out <= {data_in[28:0], data_in[31:29]};
 			5'd28: 	data_out <= {data_in[27:0], data_in[31:28]};
-			5'd27: 	data_out <= {data_in[26:0], data_in[31:27]};							5'd26: 	out <= {in[25:0], in[31:26]};
+			5'd27: 	data_out <= {data_in[26:0], data_in[31:27]};							
+			5'd26: 	data_out <= {data_in[25:0], data_in[31:26]};
 			5'd25: 	data_out <= {data_in[24:0], data_in[31:25]};
 			5'd24: 	data_out <= {data_in[23:0], data_in[31:24]};
 			5'd23: 	data_out <= {data_in[22:0], data_in[31:23]};
-			5'd22: 	data_out <= {data_in[21:0], data_in[31:22]};							5'd21: 	out <= {in[20:0], in[31:21]};
+			5'd22: 	data_out <= {data_in[21:0], data_in[31:22]};						
+			5'd21: 	data_out <= {data_in[20:0], data_in[31:21]};
 			5'd20: 	data_out <= {data_in[19:0], data_in[31:20]};
 			5'd19: 	data_out <= {data_in[18:0], data_in[31:19]};
 			5'd18: 	data_out <= {data_in[17:0], data_in[31:18]};
@@ -36,7 +38,8 @@ module ror_op (input wire [31:0] data_in, input wire [4:0] numOfRotateBits,
 			5'd4:   data_out <= {data_in[3:0], data_in[31:4]};
 			5'd3:   data_out <= {data_in[2:0], data_in[31:3]};
 			5'd2:	data_out <= {data_in[1:0], data_in[31:2]};
-			5'd1:	data_out <= {data_in[0], data_in[31:1]};							default: data_out <= data_in; //default sets the input data to output data
+			5'd1:	data_out <= {data_in[0], data_in[31:1]};							
+			default: data_out <= data_in; //default sets the input data to output data
 
 		endcase
 
