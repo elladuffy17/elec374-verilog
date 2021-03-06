@@ -1,5 +1,5 @@
-//finally we have our 32-to-1 mux to be used in the bus
-//this multiplexer has 32 inputs and 1 output. we use two 16-to-1 mux and one 2-to1 mux
+/*finally we have our 32-to-1 mux to be used in the bus
+this multiplexer has 32 inputs and 1 output. we use two 16-to-1 mux and one 2-to1 mux*/
 
 module mux_32X1(
   output[31:0] out,
