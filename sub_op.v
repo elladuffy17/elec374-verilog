@@ -1,4 +1,4 @@
-//sub_op.v, 32-bit SUBTRACTION operation module
+/*sub_op.v, 32-bit SUBTRACTION operation module*/
 `timescale 1ns/10ps
 
 module sub_op (input [31:0] regA, input [31:0] regB, input wire cin, 
