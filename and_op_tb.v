@@ -1,12 +1,12 @@
-//and_op_tb.v, testbench for the AND operation module 
+//add_op_tb.v, testbench for the AND operation module 
 
 `timescale 1ns/10ps
 
-module and_op_tb;
+module add_op_tb;
 
 	reg PCout, Zlowout, MDRout, R2out, R4out; 
 	reg MARin, Zin, PCin, MDRin, IRin, Yin;
-	reg IncPC, Read, AND, R5in, R2in, R4in; //'AND' changes based on operation we want to test
+	reg IncPC, Read, ADD, R5in, R2in, R4in; //'AND' changes based on operation we want to test
 	reg Clock;
 	reg [31:0] Mdatain;
 
@@ -16,6 +16,9 @@ module and_op_tb;
 	reg [3:0] Present_state = Default;
 
 	cpuPhase1 DUT(PCout, Zlowout, MDRout, R2out, R4out, MARin, Zin, PCin, MDRin, IRin, Yin, IncPC, Read, AND, R5in, R2in, R4in, Clock, Mdatain);
+	 //the input (in.port) and output (out.port) connects the CPU to the outside world
+   //the input (in.port) and output (out.port) connects the CPU to the outside world
+
 
 	initial
 		begin
@@ -27,18 +30,31 @@ module and_op_tb;
 		begin
 			case(Present_state)
 				
-				Default		: Present_state = Reg_load1a;
-				Reg_load1a	: Present_state = Reg_load1b;
-				Reg_load1b	: Present_state = Reg_load2a;
-				Reg_load2a	: Present_state = Reg_load2b;
-				Reg_load2b	: Present_state = Reg_load3a;
-				Reg_load3a	: Present_state = Reg_load3b;
-				Reg_load3b	: Present_state = T0;
-				T0		:  Present_state = T1;
-				T1		:  Present_state = T2;
-				T2		:  Present_state = T3;
-				T3		:  Present_state = T4;
-				T4		:  Present_state = T5;
+				Default			:	#40 Present_state = Reg_load1a;
+
+				Reg_load1a		:	#40 Present_state = Reg_load1b;
+
+				Reg_load1b		:	#40 Present_state = Reg_load2a;
+
+				Reg_load2a		:	#40 Present_state = Reg_load2b;
+
+				Reg_load2b		:	#40 Present_state = Reg_load3a;
+
+				Reg_load3a		:	#40 Present_state = Reg_load3b;
+
+				Reg_load3b		:	#40 Present_state = T0;
+
+				T0					:	#40 Present_state = T1;
+
+				T1					:	#40 Present_state = T2;
+
+				T2					:	#40 Present_state = T3;
+
+				T3					:	#40 Present_state = T4;
+
+				T4					:	#40 Present_state = T5;
+
+
 				
 			endcase
 			
@@ -52,7 +68,7 @@ module and_op_tb;
 					PCout <= 0; Zlowout <= 0; MDRout <= 0; //initialize the signals
 					R2out <= 0; R4out <= 0; MARin <= 0; Zin <= 0;
 					PCin <= 0; MDRin <= 0; IRin <= 0; Yin <= 0;
-					lncPC <= 0; Read <= 0; AND <= 0;
+					IncPC <= 0; Read <= 0; AND <= 0;
 					R5in <= 0; R2in <= 0; R4in <= 0; Mdatain <= 32'h00000000;
 				end
 
@@ -120,8 +136,8 @@ module and_op_tb;
 				end
 	
 				T4: begin
-					#10 R4out <= 1; AND <= 1; Zin <= 1;
-					#15 R4out <= 0; AND <= 0; Zin <= 0;
+					#10 R4out <= 1; ADD <= 1; Zin <= 1;
+					#15 R4out <= 0; ADD <= 0; Zin <= 0;
 				end
 
 				T5: begin
