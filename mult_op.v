@@ -1,7 +1,7 @@
 //mult_op.v, 32-bit MULTIPLICATION operation module using Booth Algorithm 
 `timescale 1ns/10ps
 
-module mult_op (input signed [31:0] multiplicand, multiplier, output reg [32*2-1:0] result);
+module mult_op (input signed [31:0] multiplicand, multiplier, output [32*2-1:0] result);
 
 	reg [2:0] cc [(32/2)-1:0];
 	reg [32:0] pp [(32/2)-1:0];
@@ -17,8 +17,8 @@ module mult_op (input signed [31:0] multiplicand, multiplier, output reg [32*2-1
 	begin 
 		cc[0] = {multiplicand[1], multiplicand[0], 1'b0};
 
-		for (x=1; x<(32/2); x=x:1)
-			cc[x] = {multiplicand[2*x+1], b[2*x], b[2*j-1]};
+		for (x=1; x<(32/2); x=x+1)
+			cc[x] = {multiplicand[2*x+1], multiplicand[2*x], multiplicand[2*x-1]};
 		
 		for (x=0; x<(32/2); x=x+1)
 		begin
@@ -39,11 +39,11 @@ module mult_op (input signed [31:0] multiplicand, multiplier, output reg [32*2-1
 
 		product = spp[0];
 
-		for (x=1; x<(32/2); j=j+1)
+		for (x=1; x<(32/2); x=x+1)
 			product = product + spp[x];
 
 	end
 
-	assign result = p;
+	assign result = product;
 
 endmodule
