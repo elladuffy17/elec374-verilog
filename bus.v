@@ -14,60 +14,60 @@ module bus(
   the idea is to choose only one of the registers R0 to R15, HI, LO, Zhigh,Zlow, PC, MDR, In.Port, or the sign-extended version of the 
   constant C, as the source of the bus. The output of the BusMux, BusMuxOut,is the Bus itself */
   
-  reg [31:0] output;
+  reg [31:0] busOutput;
   always @ (*)
   begin
   if(R0Out == 1)
-    output <= R0In;
+    busOutput <= R0In;
    else if (R1Out == 1)
-    output <= R1In;
+    busOutput <= R1In;
    else if (R2Out == 1)
-    output <= R2In;
+    busOutput <= R2In;
    else if (R3Out == 1)
-    output <= R3In;
+    busOutput <= R3In;
    else if (R4Out == 1)
-    output <= R4In;
+    busOutput <= R4In;
    else if (R5Out == 1)
-    output <= R5In;
+    busOutput <= R5In;
    else if (R6Out == 1)
-     output <= R6In;
+     busOutput <= R6In;
    else if (R7Out == 1)
-    output <= R7In;
+    busOutput <= R7In;
    else if (R8Out == 1)
-    output <= R8In;
+    busOutput <= R8In;
    else if (R9Out == 1)
-    output <= R9In;
+    busOutput <= R9In;
    else if (R10Out == 1)
-    output <= R10In;
+    busOutput <= R10In;
    else if (R11Out == 1)
-     output <= R11In;
+     busOutput <= R11In;
    else if (R12Out == 1)
-    output <= R12In;
+    busOutput <= R12In;
    else if (R13Out == 1)
-    output <= R13In;
+    busOutput <= R13In;
    else if (R14Out == 1)
-    output <= R14In;
+    busOutput <= R14In;
    else if (R15Out == 1)
-    output <= R15In;
+    busOutput <= R15In;
    else if (hiOut == 1)
-    output <= hiIn;
+    busOutput <= hiIn;
   else if (loOut == 1)
-    output <= loIn;
+    busOutput <= loIn;
   else if (zHighOut == 1)
-    output <= zHighIn;
+    busOutput <= zHighIn;
   else if (zLoOut == 1)
-    output <= zLoIn;
+    busOutput <= zLoIn;
   else if (pcOut == 1)
-    output <= pcIn;
+    busOutput <= pcIn;
   else if (MDRout == 1)
-    output <= MDRin;
+    busOutput <= MDRin;
   else if (inPortOut == 1)
-    output <= inPortIn;
+    busOutput <= inPortIn;
   else if (Cout == 1)
-    output <= C_sign_extended;
+    busOutput <= C_sign_extended;
   end
 
-  assign busMuxOut = output;
+  assign busMuxOut = busOutput;
   
 endmodule
   
