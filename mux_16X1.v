@@ -1,4 +1,4 @@
-//multiplexer with 16 inputs and 1 output. use two 8-to-1 mux and one 2-to-1 mux.
+/*multiplexer with 16 inputs and 1 output. use two 8-to-1 mux and one 2-to-1 mux.*/
 
 module mux_16X1(
   output [31:0] out,
