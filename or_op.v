@@ -7,7 +7,8 @@ module or_op(
 	output wire [31:0] regZ
 );
 
-	generate_variable j; //initializing generate variable for and loop below
+	genvar j; //initializing generate variable for and loop below
+	
 	generate
 		for (j=0; j<32; j=j+1) //goes through bits 0 to 31, 32-bits  
 		begin : loop
