@@ -2,11 +2,11 @@
 
 //module created to outline figure 2 - the GP register
 module GPReg(
-	output reg [31:0] q //allows the contents of register to be placed on the bus
+	output reg [31:0] q, //allows the contents of register to be placed on the bus
 	input wire clk, //synchronous clock signal
 	input wire clr, //used to reset the registers to a known state
 	input wire enable, //control signal that allows the data from the bus to be written onto the register
-	input wire [31:0] d, //the input to the register coming from the bus
+	input wire [31:0] d //the input to the register coming from the bus
 );
 	
   //synchronous clear & active high
