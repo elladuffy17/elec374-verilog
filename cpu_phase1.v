@@ -21,18 +21,21 @@ module cpuPhase1(
 	input Yin,
 	input IncPC,
 	input MDRRead,
-   input wire [4:0] operation,
+  input wire [4:0] operation,
 	input busMuxInR5,
 	input busMuxInR2,
 	input busMuxInR4,
 	input clk, 
-	input [31:0] mDataIn
+	input [31:0] mDataIn,
+	input BAout
 	//input wire [31:0] inPortIn,
 	//output wire [31:0] inPortOut
 
  
 );
-  
+  //for section 2.3
+  wire [31:0] busMuxInR0_to_AND;
+	
   //define 32-to-5 encoder input/output wires
   wire [31:0] encoderInput;
   wire [4:0] encoderOutput;//select signals for MUX
@@ -109,9 +112,12 @@ module cpuPhase1(
   
   wire [31:0] busMuxOut; //feed into registers as the input from the bus
   
-  
+  /* Section 2.3 is the revision to the R0 register to support Load and Store instructions */
+	//the original output of R0 is ANDED with the Not of BAout
+	assign busMuxInR0_to_AND = {32{!BAout}} & busMuxInR0; //is this right?
+	GPReg R0(busMuxInR0_to_AND, clk, clr, 1'd0, busMuxOut);
+	
   /* design/instantiate the registers*/
-  GPReg R0(busMuxInR0, clk, clr, 1'd0, busMuxOut);
   GPReg R1(busMuxInR1, clk, clr, R1Enable, busMuxOut);
   GPReg R2(busMuxInR2, clk, clr, R2Enable, busMuxOut);
   GPReg R3(busMuxInR3, clk, clr, R3Enable, busMuxOut);
