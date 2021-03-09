@@ -4,7 +4,7 @@
 
 module and_op_tb;
 
-	reg PCout, Zlowout, MDRout, R2out, R4out; 
+	reg PCout, ZHighout, Zlowout, MDRout, R2out, R4out; 
 	reg MARin, Zin, PCin, MDRin, IRin, Yin;
 	reg IncPC, Read;
 	reg [4:0] AND;
