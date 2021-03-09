@@ -2,7 +2,7 @@
 
 `timescale 1ns/10ps
 
-module and_op_tb;
+module or_op_tb;
 
 	reg PCout, ZHighout, Zlowout, MDRout, R2out, R4out; 
 	reg MARin, Zin, PCin, MDRin, IRin, Yin;
