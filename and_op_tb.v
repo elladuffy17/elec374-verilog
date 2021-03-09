@@ -2,11 +2,11 @@
 
 `timescale 1ns/10ps
 
-module add_op_tb;
+module and_op_tb;
 
 	reg PCout, Zlowout, MDRout, R2out, R4out; 
 	reg MARin, Zin, PCin, MDRin, IRin, Yin;
-	reg IncPC, Read, ADD, R5in, R2in, R4in; //'AND' changes based on operation we want to test
+	reg IncPC, Read, AND, R5in, R2in, R4in; //'AND' changes based on operation we want to test
 	reg Clock;
 	reg [31:0] Mdatain;
 
@@ -136,8 +136,8 @@ module add_op_tb;
 				end
 	
 				T4: begin
-					#10 R4out <= 1; ADD <= 1; Zin <= 1;
-					#15 R4out <= 0; ADD <= 0; Zin <= 0;
+					#10 R4out <= 1; AND <= 1; Zin <= 1;
+					#15 R4out <= 0; AND <= 0; Zin <= 0;
 				end
 
 				T5: begin
