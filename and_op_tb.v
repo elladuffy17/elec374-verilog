@@ -113,7 +113,7 @@ module and_op_tb;
 					Mdatain <= 32'h00000007;
 					PCin <= 1; MDRout <= 1;
 
-					#10 PCout <= 1; MARin <= 1; IncPC <= 1; Zin <= 1; //she has ZLowIn <= 1; but its commented out and no Zin in this line
+					#10 PCout <= 1; MARin <= 1; IncPC <= 1; Zin <= 1; 
 					#15 PCin <= 0; MDRout <= 0; PCout <= 0; MARin <= 0; IncPC <= 0;
 				end
 
