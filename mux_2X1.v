@@ -1,3 +1,4 @@
+
 //2 inputs to 1 output
 `timescale 1ns/10ps
 
