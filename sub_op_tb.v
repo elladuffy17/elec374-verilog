@@ -7,7 +7,7 @@ module sub_op_tb;
 	reg PCout, ZHighout, Zlowout, MDRout, R2out, R4out; 
 	reg MARin, Zin, PCin, MDRin, IRin, Yin;
 	reg IncPC, Read;
-   reg [4:0] SUB;
+	reg [4:0] SUB;
 	reg R5in, R2in, R4in; //'AND' changes based on operation we want to test
 	reg HIin, LOin, ZHighIn, Cin, ZLowIn;
 	reg Clock;
@@ -67,15 +67,13 @@ module sub_op_tb;
 
 	always @ (Present_state) //do the required job in each state
 		begin
-			PCout = 0; Zlowout = 0; ZHighout = 0;  MDRout= 0;   //initialize the signals
-			R2out = 0;   R4out = 0;   MARin = 0;   Zin = 0;  
-			PCin =0;   MDRin = 0;   IRin  = 0;   Yin = 0;  
-			IncPC = 0;   Read = 0;   SUB = 0;
-			R5in = 0; R2in = 0; R4in = 0; Mdatain = 32'h00000000;
-			Clear = 0;
-			
+		PCout = 0; Zlowout = 0; ZHighout = 0;  MDRout= 0;   //initialize the signals
+					R2out = 0;   R4out = 0;   MARin = 0;   Zin = 0;  
+					PCin =0;   MDRin = 0;   IRin  = 0;   Yin = 0;  
+					IncPC = 0;   Read = 0;   SUB = 0;
+					R5in = 0; R2in = 0; R4in = 0; Mdatain = 32'h00000000; Clear = 0;
+					
 			case(Present_state) //assert the required signals in each clock cycle 
-
 				Default : begin
 					PCout <= 0;   Zlowout <= 0; ZHighout <= 0;  MDRout<= 0;   //initialize the signals
 					R2out <= 0;   R4out <= 0;   MARin <= 0;   ZLowIn <= 0;  
@@ -83,57 +81,57 @@ module sub_op_tb;
 					IncPC <= 0;   Read <= 0;   SUB <= 0;
 					R5in <= 0; R2in <= 0; R4in <= 0; Mdatain <= 32'h00000000; Clear = 1;
 				end
-
+	
  				Reg_load1a: begin
-					Mdatain <= 32'h00000022;
-					Read <= 1; MDRin <= 1;
+					Mdatain = 32'h00000022;
+					Read = 1; MDRin = 1; //the first zero is there for completeness
 				end
 
 				Reg_load1b: begin
-					MDRout <= 1; R2in <= 1;
+					 MDRout = 1; R2in = 1;
 				end
 
  				Reg_load2a: begin
-					Mdatain <= 32'h00000024;
-					Read <= 1; MDRin <= 1;
+					Mdatain = 32'h00000024;
+					Read = 1; MDRin = 1;
 				end
 
 				Reg_load2b: begin
-					MDRout <= 1; R4in <= 1;
+					MDRout = 1; R4in = 1;
 				end
 
 				Reg_load3a: begin
-					Mdatain <= 32'h00000026;
-					Read <= 1; MDRin <= 1;
+					Mdatain = 32'h00000026;
+					Read = 1; MDRin = 1;
 				end
 
 				Reg_load3b: begin
-					MDRout <= 1; R5in <= 1;
+					MDRout = 1; R5in = 1;
 				end
 
-				T0: begin //see if you need to de-assert these signals
-					PCout <= 1; MARin <= 1; IncPC <= 1; Zin <= 1; //she has ZLowIn <= 1; but its commented out and no Zin in this line
+				T0: begin
+					PCout = 1; MARin = 1; IncPC = 1; Zin = 1; 
 				end
 
 				T1: begin
-					Mdatain <= 32'h4A920000;   
-					Read <= 1; MDRin <= 1;
+					Mdatain = 32'h4A920000;   
+					Read = 1; MDRin = 1;
 				end
 
 				T2: begin
-					MDRin <= 1; IRin <= 1;
+					MDRin = 1; IRin = 1;
 				end
 
 				T3: begin
-					R2out <= 1; Yin <= 1;
+					R2out = 1; Yin = 1;
 				end
 
 				T4: begin
-					R4out <= 1; SUB <= 5'b00100; Zin <= 1;
+					R4out = 1; SUB = 5'b00100; Zin = 1;
 				end
 
 				T5: begin
-					Zlowout <= 1; R5in <= 1;
+					Zlowout = 1; R5in = 1;
 				end
 
 			endcase
