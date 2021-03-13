@@ -1,4 +1,4 @@
-//add_op_tb.v, testbench for the AND operation module 
+//and_op_tb.v, testbench for the AND operation module 
 
 `timescale 1ns/10ps
 
