@@ -22,15 +22,16 @@ module cpu_phase1(
 	input Yin,
 	input IncPC,
 	input MDRread,
-   input [4:0] operation,
+   	input [4:0] operation,
 	input R5Enable,
 	input R2Enable,
 	input R4Enable,
 	input clk, clr,
 	input [31:0] mDataIn,
-	input BAout
-	//input wire [31:0] inPortIn,
-	//output wire [31:0] inPortOut
+	input BAout,
+	//section 2.5
+	input wire [31:0] inPortIn,
+	output wire [31:0] inPortOut
 
  
 );
@@ -62,6 +63,8 @@ module cpu_phase1(
   wire loOut = 0;
   wire inPortOut = 0;
   wire Cout = 0;
+	wire IROut = 0;
+	wire MAROut = 0;
   
   reg clear;
   
@@ -104,11 +107,14 @@ module cpu_phase1(
   wire [31:0] busMuxOutMDR;
   
   wire [31:0] ALUInZHi, ALUInZLo;
-  
+	
+	//section 2.5 wires
+	wire [31:0] busMuxInInport; //output from inport
+	
   //enable signals for registers
   wire R1Enable, /*R2Enable,*/ R3Enable, /*R4Enable, R5Enable,*/ R6Enable, R7Enable, R8Enable, R9Enable, 
   R10Enable, R11Enable, R12Enable, R13Enable, R14Enable, R15Enable, hiEnable, loEnable, zHiEnable, 
-  zLoEnable, pcEnable, /*MDREnable,*/ inPortEnable, CEnable; 
+  zLoEnable, pcEnable, /*MDREnable,*/ inPortEnable, CEnable, InportEnable, OutportEnable; 
   
   wire [31:0] busMuxOut; //feed into registers as the input from the bus
   
@@ -138,7 +144,7 @@ module cpu_phase1(
   GPReg loReg(busMuxInLo, clk, clr, loEnable, busMuxOut);
   GPReg zHiReg(busMuxInZHi, clk, clr, Zin, ALUInZHi);
   GPReg zLoReg(busMuxInZLo, clk, clr, Zin, ALUInZLo);
-  GPReg pcReg(busMuxInPC, clk, clr, pcEnable, busMuxOut);
+	GPReg pcReg(busMuxInPC, clk, IncPC, pcEnable, busMuxOut); //fix PCReg clear 
   GPReg inPortReg(busMuxInInPort, clk, clr, inPortEnable, busMuxOut);
   GPReg cReg(busMuxInC, clk, clr, CEnable, busMuxOut);
   GPReg Y(busMuxInY, clk, clr, Yin, busMuxOut);
@@ -147,9 +153,11 @@ module cpu_phase1(
   //mux_2X1 MDRmux (busMuxOutMDR, busMuxOut, mDataIn, MDRread);
   //GPReg MDRReg(busMuxInMDR, clk, clr, MDREnable, busMuxOutMDR);
   
+  //section 2.5 - input and output ports
+	GPReg inputPort(busMuxInInport, clk, clr, InportEnable, inPortIn);
+	GPReg outputPort(inPortOut, clk, clr, OutportEnable, busMuxOut);
+	
   //now, instantiate the bus
-
-  
   bus phase1bus(busMuxOut, busMuxInR0, busMuxInR1, busMuxInR2, busMuxInR3, busMuxInR4,
                 busMuxInR5, busMuxInR6, busMuxInR7, busMuxInR8, busMuxInR9, busMuxInR10,
                 busMuxInR11, busMuxInR12, busMuxInR13, busMuxInR14, busMuxInR15, busMuxInHi,
@@ -158,9 +166,10 @@ module cpu_phase1(
                 R10Out, R11Out, R12Out, R13Out, R14Out, R15Out, hiOut, loOut, ZHighOut, ZLowOut, 
                 PCout, MDRout, inPortOut, Cout);
   
-  //MAR, IR, ???
+  //MAR, IR
+	GPReg IR(IROut, clk, clr, IRin, busMuxOut);
+	GPReg MAR(MAROut, clk, clr, MARin, busMuxOut);
   //alu
-  
   alu aluPhase1(.regZH(ALUInZHi), .regZL(ALUInZLo), .clock(clk), .clear(clr), .regA(busMuxInY), .regB(busMuxOut), .opcode(operation));
   
   endmodule
