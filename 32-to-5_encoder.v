@@ -46,3 +46,4 @@ module encoder(
   endcase
   end
 endmodule
+//TESTING
