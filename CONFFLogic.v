@@ -20,7 +20,7 @@ module CONFFLogic (
 	assign positive		  = (bus[31] == 0) ? 1'b1 : 1'b0;
 	assign negative 	  = (bus[31] == 1) ? 1'b1 : 1'b0;
 	
-  decoder_2_to_4	decoder(IR, decoderOutput); //need to create the decoder STILLLLLLLL
+  decoder2to4 decoder(IR, decoderOutput); //need to create the decoder STILLLLLLLL
   
   assign branchFlag=(decoderOutput[0]&equal)|(decoderOutput[1]&not_equal)|(decoderOutput[2]&positive)|(decoderOutput[3]&negative);
 	
