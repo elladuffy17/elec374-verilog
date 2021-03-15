@@ -1,4 +1,4 @@
-//branch_op.v, 32-bit LOAD DIRECT instruction module 
+//ld_op.v, 32-bit LOAD DIRECT instruction module 
 
 `timescale 1ns/10ps
 
