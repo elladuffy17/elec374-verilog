@@ -8,6 +8,7 @@ module alu (
 	input clock,
 	input clear, 
 	input IncPC,
+	//input branchFlag, DO WE NEED THIS 
 
 	input wire [31:0] regA,
 	input wire [31:0] regB,
@@ -15,8 +16,11 @@ module alu (
 
 );
 
-	parameter alu_add = 5'b00011, alu_sub = 5'b00100, alu_shr = 5'b00101, alu_shl = 5'b00110, alu_ror = 5'b00111, alu_rol = 5'b01000, alu_and = 5'b01001, alu_or = 5'b01010, alu_mult = 5'b01110, 
-	alu_div = 5'b01111, alu_neg = 5'b10000, alu_not = 5'b10001; //following the opcode provided in the CPU_spec file provided for the lab
+	//following the opcode provided in the CPU_spec file provided for the lab (includes phasee 1 and phase 2)
+	parameter alu_add = 5'b00011, alu_sub = 5'b00100, alu_shr = 5'b00101, alu_shl = 5'b00110, alu_ror = 5'b00111, alu_rol = 5'b01000, alu_and = 5'b01001, 
+	alu_or = 5'b01010, alu_mult = 5'b01110, alu_div = 5'b01111, alu_neg = 5'b10000, alu_not = 5'b10001, 
+	alu_ld = 5'b00000, alu_ldi = 5'b00001, alu_st = 5'b00010, alu_addi = 5'b01011, alu_andi = 5'b01100, alu_ori = 5'b01101, alu_branch = 5'b10010, 
+	alu_jr = 5'b10011, alu_jal = 10100, alu_mfhi = 5'b10111, alu_mflo = 5'b11000, alu_out = 5'b10110, alu_in = 5'b10101;
 
 	wire [31:0] IncPC_out, add_op_sum, sub_op_difference, shr_op_out, shl_op_out, ror_op_out, rol_op_out, and_op_out, or_op_out, neg_op_out, not_op_out;
 	wire add_op_cout, sub_op_cout;
