@@ -1,5 +1,3 @@
-
-//2 inputs to 1 output
 `timescale 1ns/10ps
 
 module mux_2X1(
@@ -15,5 +13,4 @@ module mux_2X1(
 		else
 			out[31:0] <= in0[31:0];
 		end
-	endmodule
- 
+endmodule
