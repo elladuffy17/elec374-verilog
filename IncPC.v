@@ -1,6 +1,6 @@
 `timescale 1ns / 1ps
 
-module IncPC_op(
+module IncPC(
   input clk, IncPC, enable,
 	input [31:0] inputPC,
 	output reg[31:0] newPC
