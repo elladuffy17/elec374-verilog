@@ -63,8 +63,8 @@ module cpu_phase1(
   wire loOut = 0;
   wire inPortOut = 0;
   wire Cout = 0;
-	wire IROut = 0;
-	wire MAROut = 0;
+  wire IROut = 0;
+  wire MAROut = 0;
   
   reg clear;
   
@@ -166,9 +166,18 @@ module cpu_phase1(
                 R10Out, R11Out, R12Out, R13Out, R14Out, R15Out, hiOut, loOut, ZHighOut, ZLowOut, 
                 PCout, MDRout, inPortOut, Cout);
   
-  //MAR, IR
-	GPReg IR(IROut, clk, clr, IRin, busMuxOut);
+  //MAR
 	GPReg MAR(MAROut, clk, clr, MARin, busMuxOut);
+	
+	//IR
+	GPReg IR(IROut, clk, clr, IRin, busMuxOut);
+	
+	//produce IR logic
+	
+	
+	//"CONFF" Logic
+	conff_logic CONFFLogic (CONout, CONin, IROut, busMuxOut);
+  
   //alu
   alu aluPhase1(.regZH(ALUInZHi), .regZL(ALUInZLo), .clock(clk), .clear(clr), .regA(busMuxInY), .regB(busMuxOut), .opcode(operation));
   
