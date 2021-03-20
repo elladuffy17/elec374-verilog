@@ -39,6 +39,7 @@ module jal_op_tb;
 				T0			:	#40 Present_state = T1;
 				T1			:	#40 Present_state = T2;
 				T2			:	#40 Present_state = T3;
+				T3			:	#40 Present_state = T4;
 			endcase
 		end
 
@@ -47,7 +48,7 @@ module jal_op_tb;
 			PCout <= 0; ZLowOut <= 0; ZHighOut <= 0;  MDRout <= 0;
 			MARin <= 0; Zin <= 0;  PCin <= 0; MDRin <= 0; IRin <= 0;  
 			Yin <= 0;  IncPC <= 0; Read <= 0; ADD <= 0;  Clear <= 0;
-			Gra <= 0; Grb <= 0; MDRin <= 0;
+			Gra <= 0; Grb <= 0; MDRin <= 0; R15in <= 0;
 					
 			case(Present_state) //assert the required signals in each clock cycle 
 			
@@ -58,16 +59,19 @@ module jal_op_tb;
 					Clear = 1;
 				end
 				T0: begin
-					PCout <= 1; MARin <= 1; IncPC <= 1; Zin <= 1; 
+					PCout <= 1; MARin <= 1; IncPC <= 1; 
 				end
 				T1: begin
-					ZLowOut <= 1; PCin <= 1; Read = 1; MDRin <= 1;
+					Read = 1; MDRin <= 1;
 				end
 				T2: begin
-					MDRout <= 1; IRin <= 1;
+					MDRout <= 1; IRin <= 1; IncPC <= 0;
 				end
 				T3: begin
-					Gra <= 1; Rout <= 1; PCin <= 1;
+					R15in <= 1'b1; PCout <= 1;
+				end
+				T4: begin
+					Gra <= 1; PCin <= 1; Rout <= 0;
 				end
 			endcase
 		end
