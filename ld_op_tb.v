@@ -1,4 +1,5 @@
-//and_op_tb.v, testbench for the AND operation module 
+//ld_op_tb.v, testbench for the LOAD INSTRUCTION
+
 `timescale 1ns/10ps
 module ld_op_tb;
 	reg PCout, ZHighOut, ZLowOut, MDRout;
