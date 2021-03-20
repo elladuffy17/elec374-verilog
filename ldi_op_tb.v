@@ -6,7 +6,7 @@ module ldi_op_tb;
 	reg PCout, ZHighOut, ZLowOut, MDRout;
 	reg MARin, Zin, PCin, MDRin, IRin, Yin;
 	reg IncPC, Read;
-  	reg [4:0] LDI;
+	reg [4:0] ADD;
 	reg HIin, LOin, ZHighIn, Cin, ZLowIn;
 	reg Clock;
 	reg [31:0] Mdatain;
@@ -47,15 +47,15 @@ module ldi_op_tb;
 	always @ (Present_state) //do the required job in each state
 		begin
 			PCout <= 0; ZLowOut <= 0; ZHighOut <= 0;  MDRout <= 0;
-			MARin <= 0;   Zin <= 0;  PCin <= 0;   MDRin <= 0; IRin <= 0;  
-			Yin <= 0;  IncPC <= 0;   Read <= 0; LDI <= 0;  Clear <= 0;
+			MARin <= 0; Zin <= 0;  PCin <= 0; MDRin <= 0; IRin <= 0;  
+			Yin <= 0;  IncPC <= 0;   Read <= 0; ADD <= 0;  Clear <= 0;
 			Gra <= 0; Grb <= 0; MDRin <= 0;
 					
 			case(Present_state) //assert the required signals in each clock cycle 
 			
 				Default : begin
-			    PCout <= 0;   ZLowOut <= 0; ZHighOut <= 0;  MDRout<= 0;   //initialize the signals
-				  MARin <= 0;   ZLowIn <= 0; PCin <=0;   MDRin <= 0;   
+			    		PCout <= 0;   ZLowOut <= 0; ZHighOut <= 0;  MDRout<= 0;   //initialize the signals
+				  	MARin <= 0;   ZLowIn <= 0; PCin <=0;   MDRin <= 0;   
 					IRin  <= 0;   Yin <= 0; IncPC <= 0;   Read <= 0; LD <= 0;
 					Clear = 1;
 				end
@@ -72,7 +72,7 @@ module ldi_op_tb;
 					Grb <= 1; BAout <= 1; Yin <= 1;
 				end
 				T4: begin
-					Cout <= 1; LDI <= 5'b00001; Zin <= 1;
+					Cout <= 1; ADD <= 5'b00011; Zin <= 1;
 				end
 				T5: begin
 					ZLowOut <= 1; Gra <= 1; Rin <= 1;
