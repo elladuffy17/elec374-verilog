@@ -57,7 +57,7 @@ module ld_op_tb;
 				Default : begin
 					PCout <= 0;   ZLowOut <= 0; ZHighOut <= 0;  MDRout<= 0;   //initialize the signals
 				  	MARin <= 0;   ZLowIn <= 0; PCin <=0;   MDRin <= 0;   
-					IRin  <= 0;   Yin <= 0; IncPC <= 0;   Read <= 0; LD <= 0;
+					IRin  <= 0;   Yin <= 0; IncPC <= 0;   Read <= 0; ADD <= 0;
 					Clear = 1;
 				end
 				T0: begin
