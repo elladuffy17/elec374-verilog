@@ -6,7 +6,7 @@ module ldi_op_tb;
 	reg PCout, ZHighOut, ZLowOut, MDRout;
 	reg MARin, Zin, PCin, MDRin, IRin, Yin;
 	reg IncPC, Read;
-  reg [4:0] LDI;
+  	reg [4:0] LDI;
 	reg HIin, LOin, ZHighIn, Cin, ZLowIn;
 	reg Clock;
 	reg [31:0] Mdatain;
