@@ -36,13 +36,11 @@ module ldi_op_tb;
 		begin
 			case(Present_state)
 				Default			:	#40 Present_state = T0;
-				T0					:	#40 Present_state = T1;
-				T1					:	#40 Present_state = T2;
-				T2					:	#40 Present_state = T3;
-				T3					:	#40 Present_state = T4;
-				T4					:	#40 Present_state = T5;
-				T5					: #40 Present_state = T6;
-				T6					: #40 Present_state = T7;
+				T0			:	#40 Present_state = T1;
+				T1			:	#40 Present_state = T2;
+				T2			:	#40 Present_state = T3;
+				T3			:	#40 Present_state = T4;
+				T4			:	#40 Present_state = T5;
 			endcase
 		end
 
