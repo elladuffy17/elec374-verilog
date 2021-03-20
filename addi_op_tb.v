@@ -6,7 +6,7 @@ module addi_op_tb;
 	reg PCout, ZHighOut, ZLowOut, MDRout;
 	reg MARin, Zin, PCin, MDRin, IRin, Yin;
 	reg IncPC, Read;
-  reg [4:0] ADDI;
+  	reg [4:0] ADDI;
 	reg HIin, LOin, ZHighIn, Cin, ZLowIn;
 	reg Clock;
 	reg [31:0] Mdatain;
@@ -36,11 +36,11 @@ module addi_op_tb;
 		begin
 			case(Present_state)
 				Default			:	#40 Present_state = T0;
-				T0					:	#40 Present_state = T1;
-				T1					:	#40 Present_state = T2;
-				T2					:	#40 Present_state = T3;
-				T3					:	#40 Present_state = T4;
-				T4					:	#40 Present_state = T5;
+				T0			:	#40 Present_state = T1;
+				T1			:	#40 Present_state = T2;
+				T2			:	#40 Present_state = T3;
+				T3			:	#40 Present_state = T4;
+				T4			:	#40 Present_state = T5;
 			endcase
 		end
 
@@ -54,8 +54,8 @@ module addi_op_tb;
 			case(Present_state) //assert the required signals in each clock cycle 
 			
 				Default : begin
-			    PCout <= 0;   ZLowOut <= 0; ZHighOut <= 0;  MDRout<= 0;   //initialize the signals
-				  MARin <= 0;   ZLowIn <= 0; PCin <=0;   MDRin <= 0;   
+			    		PCout <= 0;   ZLowOut <= 0; ZHighOut <= 0;  MDRout<= 0;   //initialize the signals
+				  	MARin <= 0;   ZLowIn <= 0; PCin <=0;   MDRin <= 0;   
 					IRin  <= 0;   Yin <= 0; IncPC <= 0;   Read <= 0; LD <= 0;
 					Clear = 1;
 				end
