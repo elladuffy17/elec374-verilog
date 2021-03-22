@@ -2,18 +2,14 @@
 `timescale 1ns/10ps
 
 module alu (
-
 	output reg [31:0] regZH, regZL,
-	
 	input clock,
 	input clear, 
-	input IncPC,
-	//input branchFlag, DO WE NEED THIS 
-
+	input IncPC, enable,
+	input [31:0] newPC,
 	input wire [31:0] regA,
 	input wire [31:0] regB,
 	input wire [4:0] opcode
-
 );
 
 	//following the opcode provided in the CPU_spec file provided for the lab (includes phasee 1 and phase 2)
@@ -23,8 +19,6 @@ module alu (
 	alu_jr = 5'b10011, alu_jal = 10100, alu_mfhi = 5'b10111, alu_mflo = 5'b11000, alu_out = 5'b10110, alu_in = 5'b10101;
 
 	wire [31:0] IncPC_out, add_op_sum, sub_op_difference, shr_op_out, shl_op_out, ror_op_out, rol_op_out, and_op_out, or_op_out, neg_op_out, not_op_out;
-	wire [31:0] ld_op_out, ldi_op_out, st_op_out, addi_op_out, andi_op_out, ori_op_out, branch_op_out, jr_op_out, jal_op_out, mfhi_op_out, mflo_op_out, out_op_out, in_op_out;
-	wire add_op_cout, sub_op_cout;
 	wire [63:0] mult_op_out, div_op_out;
 
 	always @ (*)
@@ -33,12 +27,12 @@ module alu (
 
 			alu_add: begin
 				regZL <= add_op_sum[31:0]; //sets the 32-bit output wire regZ to the 32-bit sum of the ADDITION operation 
-				regZH <= 32'd0 + add_op_cout;//32'd0; //initialization
+				regZH <= 32'd0;//32'd0; //initialization
 			end
 
 			alu_sub: begin
 				regZL <= sub_op_difference[31:0]; //sets the 32-bit output wire regZ to the 32-bit sum of the SUBTRACTION operation 
-				regZH <= 32'd0 + sub_op_cout; //sub_op_cout[31:0]; //initialization
+				regZH <= 32'd0; //sub_op_cout[31:0]; //initialization
 			end
 
 			alu_shr: begin
@@ -92,40 +86,40 @@ module alu (
 			end
 				
 			alu_ld: begin
-				regZL <= ld_op_out[31:0]; //sets the 32-bit output wire regZ to the 32-bit sum of the LOAD DIRECT instruction 
+				regZL <= add_op_sum[31:0]; //sets the 32-bit output wire regZ to the 32-bit sum of the LOAD DIRECT instruction 
 				regZH <= 32'd0; //initialization
 			end
 			
 			alu_ldi: begin
-				regZL <= ldi_op_out[31:0]; //sets the 32-bit output wire regZ to the 32-bit sum of the LOAD IMMEDIATE instruction 
+				regZL <= add_op_sum[31:0]; //sets the 32-bit output wire regZ to the 32-bit sum of the LOAD IMMEDIATE instruction 
 				regZH <= 32'd0; //initialization
 			end
 				
 			alu_st: begin
-				regZL <= st_op_out[31:0]; //sets the 32-bit output wire regZ to the 32-bit sum of the STORE DIRECT instruction 
+				regZL <= add_op_sum[31:0]; //sets the 32-bit output wire regZ to the 32-bit sum of the STORE DIRECT instruction 
 				regZH <= 32'd0; //initialization
 			end
 				
 			alu_addi: begin
-				regZL <= addi_op_out[31:0]; //sets the 32-bit output wire regZ to the 32-bit sum of the ADD IMMEDIATE instruction 
+				regZL <= add_op_sum[31:0]; //sets the 32-bit output wire regZ to the 32-bit sum of the ADD IMMEDIATE instruction 
 				regZH <= 32'd0; //initialization
 			end
 				
 			alu_andi: begin
-				regZL <= andi_op_out[31:0]; //sets the 32-bit output wire regZ to the 32-bit sum of the AND IMMEDIATE instruction 
+				regZL <= and_op_out[31:0]; //sets the 32-bit output wire regZ to the 32-bit sum of the AND IMMEDIATE instruction 
 				regZH <= 32'd0; //initialization
 			end
 				
 			alu_ori: begin
-				regZL <= ori_op_out[31:0]; //sets the 32-bit output wire regZ to the 32-bit sum of the OR IMMEDIATE instruction 
+				regZL <= or_op_out[31:0]; //sets the 32-bit output wire regZ to the 32-bit sum of the OR IMMEDIATE instruction 
 				regZH <= 32'd0; //initialization
 			end
 				
 			alu_branch: begin
-				regZL <= branch_op_out[31:0]; //sets the 32-bit output wire regZ to the 32-bit sum of the BRANCH instruction 
+				regZL <= add_op_sum[31:0]; //sets the 32-bit output wire regZ to the 32-bit sum of the BRANCH instruction 
 				regZH <= 32'd0; //initialization
 			end
-				
+		/*		
 			alu_jr: begin
 				regZL <= jr_op_out[31:0]; //sets the 32-bit output wire regZ to the 32-bit sum of the RETURN FROM PROCEDURE instruction 
 				regZH <= 32'd0; //initialization
@@ -155,7 +149,7 @@ module alu (
 				regZL <= in_op_out[31:0]; //sets the 32-bit output wire regZ to the 32-bit sum of the IN instruction 
 				regZH <= 32'd0; //initialization
 			end
-			
+			*/
 			default: begin // Default to prevent latching
 				regZL <= 32'd0; 
 				regZH <= 32'd0; 
@@ -163,8 +157,8 @@ module alu (
 		endcase
 	end
 	//instantiate the ALU module operations  
-	add_op add_M0(.regA(regA), .regB(regB), .cin({1'd0}), .sum(add_op_sum), .cout(add_op_cout));
-	sub_op sub_M0(.regA(regA), .regB(regB), .cin({1'd0}), .difference(sub_op_difference), .cout(sub_op_cout));
+	add_op add_M0(.regA(regA), .regB(regB), .cin({1'd0}), .sum(add_op_sum), .cout());
+	sub_op sub_M0(.regA(regA), .regB(regB), .cin({1'd0}), .difference(sub_op_difference), .cout());
 	shr_op shr_M0(regA, regB, shr_op_out);
 	shl_op shl_M0(regA, regB, shl_op_out);
 	ror_op ror_M0(regA, regB, ror_op_out);
@@ -175,7 +169,7 @@ module alu (
 	div_op div_M0(regA, regB, div_op_out);
 	neg_op neg_M0(regB, neg_op_out); //shown in regB in simplified datapath given for lab
 	not_op not_M0(regB, not_op_out); //shown in regB in simplified datapath given for lab
-	IncPC_op IncPC_M0(regA, IncPC, IncPC_out);
+	IncPC IncPC_M0(clock, IncPC, enable, IncPC_out, newPC);
 	
 	//update once these instruction files are made
 	//ld_op ld_M0
@@ -193,4 +187,3 @@ module alu (
 	//in_op in_M0
 	
 endmodule
-	

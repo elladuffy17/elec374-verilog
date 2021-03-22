@@ -13,12 +13,5 @@ wire [31:0] muxOut, mdr_input;
 assign mdr_input = (MDRread) ? mDataIn : busMuxOut;
 
 GPReg MDRReg(q, clk, clr, MDRin, mdr_input);
-
-//data is stored in the MDR using the synchronous clock signal and the the MDRin control signal
-/*always @(posedge clk)
-  if (clr)
-    q <= 0;
-  else if(MDRin)
-    q <= muxOut;
-	*/
 endmodule
+ 
