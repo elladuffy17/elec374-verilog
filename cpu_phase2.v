@@ -7,7 +7,7 @@ the instructions */
 
 module cpu_phase2(
   //the input (in.port) and output (out.port) connects the CPU to the outside world
- // cpu_phase1 DUT(PCout, ZHighout, Zlowout, MDRout,R0out, R1out, R2out, R3out, R4out, R5out, R6out, R7out, R8out, R9out, R10out, R11out, R12out, R13out, R14out, R15out, MARin, Zin, PCin, MDRin, IRin, Yin, IncPC, Read, LD, R0in, R1in, R2in, R3in, R4in, R5in, R6in, R7in, R8in, R9in, R10in, R11in, R12in, R13in, R14in, R15in Clock, Clear, Mdatain, BAout);
+ // cpu_phase1 DUT(PCout, ZHighout, Zlowout, MDRout,R0out, R1out, R2out, R3out, R4out, R5out, R6out, R7out, R8out, R9out, R10out, R11out, R12out, R13out, R14out, R15out, MARin, Zin, PCin, MDRin, IRin, Yin, IncPC, LD, R0in, R1in, R2in, R3in, R4in, R5in, R6in, R7in, R8in, R9in, R10in, R11in, R12in, R13in, R14in, R15in Clock, Clear, Mdatain, BAout);
    input PCout,
 	input ZHighOut,
 	input ZLowOut,
@@ -34,7 +34,6 @@ module cpu_phase2(
   //for section 2.3
   wire [31:0] busMuxInR0_to_AND;
   wire [31:0] mDataIn;
-  wire[8:0] MAR_Q;
   //define 32-to-5 encoder input/output wires
   wire [31:0] encoderInput;
   wire [4:0] encoderOutput;//select signals for MUX
@@ -98,8 +97,8 @@ module cpu_phase2(
   
   /* Section 2.3 is the revision to the R0 register to support Load and Store instructions */
 	//the original output of R0 is ANDED with the Not of BAout
-	assign busMuxInR0_to_AND = {32{!BAout}} & busMuxInR0; //is this right?
-	GPReg R0(busMuxInR0_to_AND, clk, clr, 1'd0, busMuxOut);
+	assign busMuxInR0 = {32{!BAout}} & busMuxInR0_to_AND ; //is this right?
+	GPReg R0(busMuxInR0_to_AND, clk, clr, R0in, busMuxOut);
 	
   /* design/instantiate the registers*/
   GPReg R1(busMuxInR1, clk, clr, R1in, busMuxOut);
@@ -126,7 +125,7 @@ module cpu_phase2(
   GPReg inPortReg(busMuxInInPort, clk, clr, inPortEnable, busMuxOut);
   GPReg cReg(busMuxInC, clk, clr, CEnable, busMuxOut);
   GPReg Y(busMuxInY, clk, clr, Yin, busMuxOut);
-  mdrUnit MDRUnit(busMuxInMDR, busMuxOut, mDataIn, clk, clr, MDRin, MDRread);
+
 
   bus phase1bus(busMuxOut, busMuxInR0, busMuxInR1, busMuxInR2, busMuxInR3, busMuxInR4,
                 busMuxInR5, busMuxInR6, busMuxInR7, busMuxInR8, busMuxInR9, busMuxInR10,
@@ -146,13 +145,10 @@ module cpu_phase2(
   .R7in(R7in), .R8in(R8in), .R9in(R9in), .R10in(R10in), .R11in(R11in), .R12in(R12in), .R13in(R13in), .R14in(R14in), .R15in(R15in), .C_sign_extended(C_sign_extended));
   
   
-  MemSubSystem MSS(.Clock(clk), .Clear(clr), .MARin(MARin), .MDRin(MDRin), .W_sig(W_sig), .MDRread(MDRread), .BusMuxOut(BusMuxOut), .BusMuxInMDROutput(BusMuxInMDROutput));
+  MemSubSystem MSS(.Clock(clk), .Clear(clr), .MARin(MARin), .MDRin(MDRin), .W_sig(W_sig), .MDRread(MDRread), .BusMuxOut(busMuxOut), .BusMuxInMDROutput(busMuxInMDR));
 
   conff_Logic CONFFLogic (CONout, CONin, IROut[20:19], busMuxOut, clk);
   
-  MAR_unit MAR_inst(.Q(MAR_Q),.enable(MARin), .clk(clk), .clr(clr), .D(BusMuxOut));
-  
-  RAM RAM_inst(.address(MAR_Q),.clock(clk),.data(busMuxInMDR),.wren(W_sig),.q(mDataIn));
   
  endmodule
   

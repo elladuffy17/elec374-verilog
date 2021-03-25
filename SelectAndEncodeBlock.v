@@ -3,6 +3,8 @@
 module SelectAndEncodeBlock(
 	input wire  Gra, Grb, Grc, Rin, Rout, BAout, // signals anded with IR bits + help produce output
 	input wire [3:0] Ra, Rb, Rc, // Bits from IR
+	input wire clk, clr, IRin,
+	input wire [31:0] busMuxOut, IROut,
 	output R0out, R1out, R2out, R3out, R4out, R5out, R6out, R7out, R8out, R9out, R10out, R11out, R12out, R13out, R14out, R15out, R0in, R1in, 
 							  R2in, R3in, R4in, R5in,  R6in, R7in, R8in, R9in, R10in, R11in, R12in, R13in, R14in, R15in,
 	output [31:0] C_sign_extended);
@@ -62,6 +64,7 @@ module SelectAndEncodeBlock(
 	and2t1 R14ANDOUT(BARorOut,DecOut[14], R14out);
 	and2t1 R15ANDOUT(BARorOut,DecOut[15], R15out);
 	
+	GPReg IR(IROut, clk, clr, IRin, busMuxOut);
 	// C_sign_extension output
-	C_sign_extended CextensionOut(Rc[3], C_sign_extended); //IR bit 18's type determines C_sign_extension output
+	C_sign_extended CextensionOut(IROut, C_sign_extended); //IR bit 18's type determines C_sign_extension output
 endmodule
