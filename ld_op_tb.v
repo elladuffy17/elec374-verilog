@@ -1,5 +1,7 @@
-//and_op_tb.v, testbench for the ld operation module 
+//ld_op_tb.v, testbench for the ld operation module 
+
 `timescale 1ns/10ps
+
 module ld_op_tb;
 	reg PCout, ZHighOut, ZLowOut, MDRout;
 	reg MARin, Zin, PCin, MDRin, IRin, Yin;
