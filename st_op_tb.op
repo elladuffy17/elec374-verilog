@@ -88,6 +88,7 @@ module st_op_tb;
 				end
 				T7: begin
 					MDRout <= 1; Gra <= 0; Rin <= 0; MDRin <= 0;
+					W_sig <= 1;
 				end
 			endcase
 		end
