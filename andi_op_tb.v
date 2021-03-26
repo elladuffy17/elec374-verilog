@@ -5,7 +5,7 @@
 module andi_op_tb;
 	reg PCout, ZHighOut, ZLowOut, MDRout;
 	reg MARin, Zin, PCin, MDRin, IRin, Yin;
-	reg IncPC, Read;
+	reg IncPC;
 	reg [4:0] AND;
 	reg HIin, LOin, ZHighIn, Cin, ZLowIn;
 	reg Clock;
@@ -21,10 +21,10 @@ module andi_op_tb;
 	parameter Default = 4'b0000, Reg_load1a = 4'b0001, Reg_load1b = 4'b0010, Reg_load2a = 4'b0011, Reg_load2b = 4'b0100, Reg_load3a = 4'b0101, Reg_load3b = 4'b0110, T0 = 4'b0111, T1 = 4'b1000, T2 = 4'b1001, T3 = 4'b1010, T4 = 4'b1011, T5 = 4'b1100, T6 = 4'b1101, T7 = 4'b1110;
 	reg [3:0] Present_state = Default;
 	
-	cpu_phase2 DUT(.PCout(PCout), .ZHighOut(ZHighOut), .ZLowOut(ZLowOut), .MDRout(MDRout), .R2Out(R2Out), .R4Out(R4Out), .MARin(MARin), 
-	.Zin(Zin), .PCin(PCin), .MDREnable(MDREnable), .IRin(IRin), .Yin(Yin), .IncPC(IncPC), .MDRread(MDRread), .operation(LD), .clk(Clock),
+		cpu_phase2 DUT(.PCout(PCout), .ZHighOut(ZHighOut), .ZLowOut(ZLowOut), .MDRout(MDRout), .R2Out(R2Out), .R4Out(R4Out), .MARin(MARin), 
+	.Zin(Zin), .PCin(PCin), .MDREnable(MDREnable), .IRin(IRin), .Yin(Yin), .IncPC(IncPC), .MDRread(MDRread), .operation(ADD), .clk(Clock),
 	.clr(Clear), .BAout(BAout), .Gra(Gra), .Grb(Grb), .Grc(Grc), .MDRin(MDRin), .W_sig(W_sig),
-	.BusMuxOut(BusMuxOut), .BusMuxInMDROutput(BusMuxInMDROutput), .Rin(Rin), .Rout(Rout), .hiEnable(hiEnable), .loEnable(loEnable), .pcEnable(pcEnable), .inPortEnable(inPortEnable), .CEnable(CEnable), .CONout(CONout), .CONin(CONin), .MAR_enable(MAR_enable)); 
+	.BusMuxOut(BusMuxOut), .BusMuxInMDROutput(BusMuxInMDROutput), .Rin(Rin), .Rout(Rout), .hiEnable(hiEnable), .loEnable(loEnable), .pcEnable(pcEnable), .inPortEnable(inPortEnable), .CEnable(CEnable), .CONout(CONout), .CONin(CONin), .alu_enable(alu_enable), .newPC(newPC));
 	
 	initial
 		begin
@@ -48,7 +48,7 @@ module andi_op_tb;
 		begin
 			PCout <= 0; ZLowOut <= 0; ZHighOut <= 0;  MDRout <= 0;
 			MARin <= 0; Zin <= 0;  PCin <= 0; MDRin <= 0; IRin <= 0;  
-			Yin <= 0;  IncPC <= 0; Read <= 0; AND <= 0;  Clear <= 0;
+			Yin <= 0;  IncPC <= 0; MDRread <= 0; AND <= 0;  Clear <= 0;
 			Gra <= 0; Grb <= 0; MDRin <= 0;
 					
 			case(Present_state) //assert the required signals in each clock cycle 
@@ -56,14 +56,14 @@ module andi_op_tb;
 				Default : begin
 			    		PCout <= 0;   ZLowOut <= 0; ZHighOut <= 0;  MDRout<= 0;   //initialize the signals
 				  	MARin <= 0;   ZLowIn <= 0; PCin <=0;   MDRin <= 0;   
-					IRin  <= 0;   Yin <= 0; IncPC <= 0;   Read <= 0; AND <= 0;
+					IRin  <= 0;   Yin <= 0; IncPC <= 0;   MDRread <= 0; AND <= 0;
 					Clear = 1;
 				end
 				T0: begin
 					PCout <= 1; MARin <= 1; IncPC <= 1; Zin <= 1; 
 				end
 				T1: begin
-					ZLowOut <= 1; PCin <= 1; Read = 1; MDRin <= 1;
+					ZLowOut <= 1; PCin <= 1; MDRread <= 1; MDRin <= 1;
 				end
 				T2: begin
 					MDRout <= 1; IRin <= 1;
