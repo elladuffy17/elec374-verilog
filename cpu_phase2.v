@@ -23,13 +23,15 @@ module cpu_phase2(
 	input IncPC,
 	input MDRread,
    input [4:0] operation,
-	input clk, clr,
+	input clk, clr, Run, Reset, Stop,
 	input BAout,
-	input Gra, Grb, Grc, // added ****
-	input MDRin, W_sig, 
+	input Gra, Grb, Grc, Cout, // added ****
+	input MDRin, W_sig, R_sig, 
 	input [31:0] BusMuxOut, BusMuxInMDROutput,
 	input Rin, Rout, hiEnable, loEnable, pcEnable, inPortEnable, CEnable, CONout, CONin, alu_enable,
-	input [31:0] newPC
+	input [31:0] newPC,
+	
+	input LOin, HIin, ADD, SUB, MUL, DIV, AND, OR, NEG, NOT, SHR, SHL, ROR, ROL // NOT SURE WHAT TO DO WITH THESE SIGNALS
 	);
   //for section 2.3
   wire [31:0] busMuxInR0_to_AND;
@@ -42,7 +44,6 @@ module cpu_phase2(
   wire hiOut = 0;
   wire loOut = 0;
   wire inPortOut = 0;
-  wire Cout = 0;
   wire R0out, R1out, R2out, R3out, R4out, R5out, R6out, R7out, R8out, R9out, R10out,
   R11out, R12out, R13out, R14out, R15out, R0in, R1in, R2in, R3in, R4in, R5in, R6in, 
   R7in, R8in, R9in, R10in, R11in, R12in, R13in, R14in, R15in;
@@ -101,8 +102,8 @@ module cpu_phase2(
 	GPReg R0(busMuxInR0_to_AND, clk, clr, R0in, busMuxOut);
 	
   /* design/instantiate the registers*/
-  GPReg R1(busMuxInR1, clk, clr, R1in, busMuxOut);
-  GPReg R2(busMuxInR2, clk, clr, R2in, busMuxOut);
+  GPReg #(.initVal(32'b1))R1(busMuxInR1, clk, clr, R1in, busMuxOut);
+  GPReg #(.initVal(32'b0000_0000_0000_1111_1111_1111_1111_1111))R2(busMuxInR2, clk, clr, R2in, busMuxOut);
   GPReg R3(busMuxInR3, clk, clr, R3in, busMuxOut);
   GPReg R4(busMuxInR4, clk, clr, R4in, busMuxOut);
   GPReg R5(busMuxInR5, clk, clr, R5in, busMuxOut);
@@ -123,15 +124,13 @@ module cpu_phase2(
   GPReg zLoReg(busMuxInZLo, clk, clr, Zin, ALUInZLo);
   GPReg pcReg(busMuxInPC, clk, clr, pcEnable, busMuxOut);
   GPReg inPortReg(busMuxInInPort, clk, clr, inPortEnable, busMuxOut);
-  GPReg cReg(busMuxInC, clk, clr, CEnable, busMuxOut);
   GPReg Y(busMuxInY, clk, clr, Yin, busMuxOut);
-
-
+  
   bus phase1bus(busMuxOut, busMuxInR0, busMuxInR1, busMuxInR2, busMuxInR3, busMuxInR4,
                 busMuxInR5, busMuxInR6, busMuxInR7, busMuxInR8, busMuxInR9, busMuxInR10,
                 busMuxInR11, busMuxInR12, busMuxInR13, busMuxInR14, busMuxInR15, busMuxInHi,
                 busMuxInLo, busMuxInZHi, busMuxInZLo, busMuxInPC, busMuxInMDR, busMuxInInPort,
-                busMuxInC, R0out, R1out, R2out, R3out, R4out, R5out, R6out, R7out, R8out, R9out,
+                C_sign_extended, R0out, R1out, R2out, R3out, R4out, R5out, R6out, R7out, R8out, R9out,
                 R10out, R11out, R12out, R13out, R14out, R15out, hiOut, loOut, ZHighOut, ZLowOut, 
                 PCout, MDRout, inPortOut, Cout);
   
@@ -139,7 +138,7 @@ module cpu_phase2(
   
   alu aluPhase1(.regZH(ALUInZHi), .regZL(ALUInZLo), .clock(clk), .clear(clr), .IncPC(IncPC), .enable(alu_enable), .newPC(newPC),  .regA(busMuxInY), .regB(busMuxOut), .opcode(operation));
 
-  SelectAndEncodeBlock SAEB(.Gra(Gra),.Grb(Grb),.Grc(Grc), .Rin(Rin), .Rout(Rout), .BAout(BAout), .Ra(IROut[26:23]), .Rb(IROut[22:19]), .Rc(IROut[18:15]), .clk(clk), .clr(clr), .IRin(IRin),
+  SelectAndEncodeBlock SAEB(.Gra(Gra),.Grb(Grb), .Grc(Grc), .Rin(Rin), .Rout(Rout), .BAout(BAout), .Ra(IROut[26:23]), .Rb(IROut[22:19]), .Rc(IROut[18:15]), .clk(clk), .clr(clr), .IRin(IRin),
   .busMuxOut(busMuxOut), .IROut(IROut), .R0out(R0out), .R1out(R1out), .R2out(R2out), .R3out(R3out), .R4out(R4out), .R5out(R5out), .R6out(R6out), .R7out(R7out), .R8out(R8out), .R9out(R9out), 
   .R10out(R10out), .R11out(R11out), .R12out(R12out), .R13out(R13out), .R14out(R14out), .R15out(R15out), .R0in(R0in), .R1in(R1in), .R2in(R2in), .R3in(R3in), .R4in(R4in), .R5in(R5in), .R6in(R6in), 
   .R7in(R7in), .R8in(R8in), .R9in(R9in), .R10in(R10in), .R11in(R11in), .R12in(R12in), .R13in(R13in), .R14in(R14in), .R15in(R15in), .C_sign_extended(C_sign_extended));
@@ -149,6 +148,10 @@ module cpu_phase2(
 
   conff_Logic CONFFLogic (CONout, CONin, IROut[20:19], busMuxOut, clk);
   
+  ControlUnit(.PCout(PCout), .MDRout(MDRout), .ZHighOut(ZHighOut), .ZLowOut(ZLowOut), .hiEnable(HiOut), .loEnable(LoOut), .Rin(Rin), .Rout(Rout), .Gra(Gra), .Grb(Grb), .Grc(Grc), .BAout(BAout), .Cout(Cout),
+					.MDRin(MDRin), .MARin(MARin), .Zin(Zin), .Yin(Yin), .IRin(IRin), .PCin(PCin), .CONin(CONin), .LoIn(LOin), .HiIn(HIin), .ADD(ADD), .SUB(SUB), .MUL(MUL), .DIV(DIV), .AND(AND), .OR(OR), .NEG(NEG), 
+					.NOT(NOT), .SHR(SHR), .SHL(SHL), .ROR(ROR), .ROL(ROL), .W_sig(Write), .R_sig(Read), .inPortEnable(InPortOut), .outPortEnable(OutPortIn), .Run(Run), .Clear(clr), .ALUOpCode(operation), 
+					.IR(IROut), .Clock(clk), .Reset(Reset), .Stop(Stop), .Interrupts(Interrupts), .Con_FF(Con_FF));
   
  endmodule
   
