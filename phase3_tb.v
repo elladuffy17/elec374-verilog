@@ -7,10 +7,10 @@ module phase3_tb;
 
 cpu_phase3 DUT(
 	.clock(clk),
-  .Reset(Reset),
-  .Stop(Stop),
-  .InPort_input(InPort_input), //idk about these
-  .OutPort_output(OutPort_output), //idk about these
+  	.Reset(Reset),
+  	.Stop(Stop),
+  	.InPort_input(InPort_input), //idk about these
+ 	.OutPort_output(OutPort_output), //idk about these
 	.bus_contents(bus_contents),
 	.operation(operation)
 );
